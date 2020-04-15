@@ -28,7 +28,7 @@ export const create = async (text: string) => {
 export const update = async (id: number, text: string) => {
   const NotesRepository = repository.getRepository(Notes);
   const note = await NotesRepository.update(id,{ text: text });
-  return await NotesRepository.save(note);
+  return await NotesRepository.findOne({id: id});
 };
 
 export const deleteById = async (id: number) => {

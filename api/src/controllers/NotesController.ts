@@ -68,18 +68,18 @@ export const show = async (req: Request, res: Response) => {
  *         description: validation errors
  */
 export const create = async (req: Request, res: Response) => {
+  console.log('create');
   const text = req.body.text;
 
   if(! text) {
     res.status(422).send({ message: 'Text field is required' });
   }
 
-  try {
-    const data = await NoteService.create(text);
-    return res.send({success: true, data: data});
-  } catch (e) {
+  const data = await NoteService.create(text).catch(err => {
     return res.send({success: false});
-  }
+  });
+
+  return res.send({success: true, data: data});
 };
 
 /**
@@ -117,14 +117,13 @@ export const update = async (req: Request, res: Response) => {
     res.status(422).send({ message: 'Text field is required' });
   }
 
-  try {
-    const data = await NoteService.update(id, text);
-
-    return res.send({success: true, data: data});
-  } catch (e) {
+  const data = await NoteService.update(id, text).catch((err: any) => {
     return res.send({success: false});
-  }
+  });
+
+  return res.send({success: true, data: data});
 };
+
 
 /**
  * @swagger
@@ -151,13 +150,13 @@ export const destroy = async (req: Request, res: Response) => {
 
   if (! await NoteService.exists(id)) return res.sendStatus(404);
 
-  try {
-    const result = await NoteService.deleteById(id);
+    const result = await NoteService.deleteById(id).catch((err :any) => {
+      return res.send({success: false});
+    });
+
     return res.send({success: true});
-  } catch (e) {
-    return res.send({success: false});
-  }
 };
+
 
 
 
