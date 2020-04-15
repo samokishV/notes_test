@@ -7,11 +7,12 @@ Create config from example and adjust it.
 ```
 # cp .env.example .env
 ```
-Install packages and global install knex.
+Install packages and global install knex and nodemon.
 
 ```
 # npm install
-# npm install knex -g
+# sudo npm install knex -g
+# sudo npm install nodemon -g
 ```
 
 Run migrations and seeds.
